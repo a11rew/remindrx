@@ -9,7 +9,7 @@ function InfoBastion({ message }: Props) {
   return (
     <div
       title={message}
-      className="border-2 border-black aspect-square rounded-full w-[20px] h-[20px] cursor-help flex items-center justify-center"
+      className="border-2 mb-1 border-black aspect-square rounded-full w-[20px] h-[20px] cursor-help text-sm md:text-base flex items-center justify-center"
     >
       ?<span className="sr-only">{message}</span>
     </div>
