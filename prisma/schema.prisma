@@ -12,60 +12,14 @@ datasource db {
     referentialIntegrity = "prisma"
 }
 
-// Necessary for Next auth
-model Account {
-    id                String  @id @default(cuid())
-    userId            String
-    type              String
-    provider          String
-    providerAccountId String
-    refresh_token     String? @db.Text
-    access_token      String? @db.Text
-    expires_at        Int?
-    token_type        String?
-    scope             String?
-    id_token          String? @db.Text
-    session_state     String?
-    user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-    @@unique([provider, providerAccountId])
-}
-
-model Session {
-    id           String   @id @default(cuid())
-    sessionToken String   @unique
-    userId       String
-    expires      DateTime
-    user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model User {
-    id            String     @id @default(cuid())
-    name          String?
-    email         String?    @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    reminders     Reminder[]
-}
-
-model VerificationToken {
-    identifier String
-    token      String   @unique
-    expires    DateTime
-
-    @@unique([identifier, token])
-}
-
 model Reminder {
-    id        String  @id @default(cuid())
-    name      String
-    when      String // When to take the drug
-    drug      String // Drug name
-    dose      String? // Drug dose
-    message   String? // Message to send
-    creatorID String //  ID of creator
+    id      String  @id @default(cuid())
+    name    String
+    when    String // When to take the drug
+    drug    String // Drug name
+    dose    String? // Drug dose
+    message String? // Message to send
+    // creatorID String //  ID of creator
 
-    creator User @relation(fields: [creatorID], references: [id]) // Mapping to user
+    // creator User @relation(fields: [creatorID], references: [id]) // Mapping to user
 }

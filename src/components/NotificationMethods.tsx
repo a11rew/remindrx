@@ -74,7 +74,7 @@ function NotificationMethods({}: Props) {
               </div>
               {value.length > 0 && (
                 <p className="text-sm text-gray-500 mt-2">
-                  You will receive a reminder via{" "}
+                  You will receive the reminder via{" "}
                   {value[0]?.id === "sms"
                     ? value[0]?.id.toUpperCase()
                     : String(value[0]?.id)}{" "}
