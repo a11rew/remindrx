@@ -1,5 +1,6 @@
 import React from "react";
 import { Controller, FormProvider, useForm } from "react-hook-form";
+import { trpc } from "../utils/trpc";
 import FormInput from "./FormInput";
 import FormTextArea from "./FormTextArea";
 import InfoBastion from "./InfoBastion";
@@ -14,9 +15,17 @@ function NewReminder() {
     formState: { errors },
     control,
   } = methods;
+  const { mutate } = trpc.useMutation(["reminders.create"]);
 
   const onSubmit = (data: typeof defaultValues) => {
     console.log(data);
+
+    mutate({
+      dosage: data.dosage,
+      drug: data.drug,
+      message: data.message,
+      when: data.when,
+    });
   };
 
   return (

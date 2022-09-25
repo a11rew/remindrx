@@ -1,10 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import NewReminder from "../components/NewReminder";
-import { trpc } from "../utils/trpc";
+import { useIdentifyUser } from "../hooks/useIdentifyUser";
 
 const Home: NextPage = () => {
-  const hello = trpc.useQuery(["example.hello", { text: "from tRPC" }]);
+  useIdentifyUser();
 
   return (
     <div className="bg-gradient-to-br from-blue-100 via-blue-300 to-blue-400 min-h-screen">

@@ -13,13 +13,10 @@ datasource db {
 }
 
 model Reminder {
-    id      String  @id @default(cuid())
-    name    String
-    when    String // When to take the drug
-    drug    String // Drug name
-    dose    String? // Drug dose
-    message String? // Message to send
-    // creatorID String //  ID of creator
-
-    // creator User @relation(fields: [creatorID], references: [id]) // Mapping to user
+    id        String  @id @default(cuid())
+    when      String // When to take the drug
+    drug      String // Drug name
+    dose      String? // Drug dose
+    message   String? // Message to send
+    creatorID String //  ID of creator
 }
