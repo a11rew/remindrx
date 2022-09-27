@@ -236,7 +236,7 @@ const NotificationMethodCard = ({
   remove: () => void;
 }) => {
   return (
-    <li className="flex p-2 border rounded-lg justify-between items-center cursor-grab bg-white">
+    <li className="flex p-2 border rounded-lg justify-between items-center bg-white">
       <div className="flex min-w-0 items-center">
         <div className="flex items-center gap-2 mr-2 md:mr-10 min-w-fit">
           <div className="flex flex-col">
@@ -283,7 +283,7 @@ const NotificationMethodCard = ({
   );
 };
 
-const notificationMethods = [
+export const notificationMethods = [
   {
     name: "Email",
     id: "email",

@@ -16,16 +16,28 @@ function NewReminder() {
     control,
   } = methods;
   const { mutate } = trpc.useMutation(["reminders.create"]);
+  const utils = trpc.useContext();
 
   const onSubmit = (data: typeof defaultValues) => {
-    console.log(data);
-
-    mutate({
-      dosage: data.dosage,
-      drug: data.drug,
-      message: data.message,
-      when: data.when,
-    });
+    mutate(
+      {
+        dosage: data.dosage,
+        drug: data.drug,
+        message: data.message,
+        when: data.when,
+        how:
+          data.methods?.map((m: { id: string; value: string }) => ({
+            type: m.id,
+            value: m.value,
+          })) || [],
+      },
+      {
+        onSuccess: () => {
+          utils.invalidateQueries(["reminders.mine"]);
+          methods.reset(defaultValues);
+        },
+      }
+    );
   };
 
   return (

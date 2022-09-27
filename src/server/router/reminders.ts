@@ -9,6 +9,9 @@ export const remindersRouter = createRouter()
         where: {
           creatorID: ctx.user.id,
         },
+        include: {
+          how: true,
+        },
       });
     },
   })
@@ -18,6 +21,12 @@ export const remindersRouter = createRouter()
       dosage: z.string(),
       when: z.string(),
       message: z.string(),
+      how: z.array(
+        z.object({
+          type: z.string(),
+          value: z.string(),
+        })
+      ),
     }),
     async resolve({ ctx, input }) {
       if (!ctx.user.id) {
@@ -27,7 +36,7 @@ export const remindersRouter = createRouter()
         });
       }
 
-      return await ctx.prisma.reminder.create({
+      const reminder = await ctx.prisma.reminder.create({
         data: {
           dose: input.dosage,
           creatorID: ctx.user.id,
@@ -36,6 +45,31 @@ export const remindersRouter = createRouter()
           message: input.message,
         },
       });
+
+      // Create notification methods
+      await Promise.all(
+        input.how.map(async (method) => {
+          if (!ctx.user.id) {
+            throw new TRPCError({
+              code: "UNAUTHORIZED",
+              message: "Missing user id",
+            });
+          }
+
+          const result = await ctx.prisma.notificationMethod.create({
+            data: {
+              type: method.type,
+              value: method.value,
+              creatorID: ctx.user.id,
+              reminderId: reminder.id,
+            },
+          });
+
+          return result.id;
+        })
+      );
+
+      return reminder;
     },
   })
   .mutation("delete", {

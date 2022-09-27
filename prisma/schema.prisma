@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
     provider        = "prisma-client-js"
     previewFeatures = ["referentialIntegrity"]
@@ -13,10 +10,20 @@ datasource db {
 }
 
 model Reminder {
-    id        String  @id @default(cuid())
-    when      String // When to take the drug
-    drug      String // Drug name
-    dose      String? // Drug dose
-    message   String? // Message to send
-    creatorID String //  ID of creator
+    id        String               @id @default(cuid())
+    when      String
+    drug      String
+    dose      String?
+    message   String?
+    creatorID String
+    how       NotificationMethod[]
+}
+
+model NotificationMethod {
+    id         String   @id @default(cuid())
+    type       String
+    value      String
+    creatorID  String
+    Reminder   Reminder @relation(fields: [reminderId], references: [id])
+    reminderId String
 }

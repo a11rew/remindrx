@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import NewReminder from "../components/NewReminder";
+import ReminderList from "../components/ReminderList";
 import { useIdentifyUser } from "../hooks/useIdentifyUser";
 
 const Home: NextPage = () => {
@@ -21,13 +22,15 @@ const Home: NextPage = () => {
         <div className="flex flex-col gap-4 bg-white h-[90vh] w-[90vw] rounded-lg shadow-sm">
           {/* <h1 className="text-center text-5xl mt-6">RemindRx</h1> */}
           <div className="flex flex-col-reverse md:flex-row h-full">
-            {/* <div className="md:w-1/2 h-full p-4">
+            <div className="md:w-1/2 h-full p-4">
               <h2 className="text-2xl mt-6 text-center underline">
                 Your Reminders
-                <div className="w-1/2"></div>
               </h2>
-            </div> */}
-            <div className="w-full overflow-y-auto p-4">
+              <div className="mt-4">
+                <ReminderList />
+              </div>
+            </div>
+            <div className="w-full md:w-1/2 overflow-y-auto p-4">
               <div className="mt-4">
                 <NewReminder />
               </div>
